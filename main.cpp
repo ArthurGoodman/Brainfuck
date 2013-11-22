@@ -36,7 +36,11 @@ public:
             case '+': ++*a; break;
             case '-': --*a; break;
             case '.': if(format) cout << (unsigned)*a; else cout << *a;  break;
-            case ',': { string l; unsigned i; getline(cin, l); istringstream s(l); s >> i; if(format) *a = i; else *a = (unsigned char)i; break; }
+            case ',':
+            {
+                string l; unsigned i; getline(cin, l); istringstream s(l); s >> i;
+                if(format) *a = i; else *a = (unsigned char)i; break;
+            }
             case '[':
             {
                 t.push(i-1); if(*a) break;
