@@ -13,8 +13,14 @@ class Brainfuck
     unsigned i, b;
     stack<unsigned> t;
 
-public:
+    bool format; // char or int
+
     void error(string m) { cout << "error: " << m; throw 0; }
+
+public:
+    Brainfuck() : format(false) {}
+
+    void setFormat(bool f) { format = f; }
 
     void run(string p)
     {
@@ -29,8 +35,8 @@ public:
             case '<': --a; break;
             case '+': ++*a; break;
             case '-': --*a; break;
-            case '.': cout << (unsigned)(*a); break;
-            case ',': { string l; unsigned i; getline(cin, l); istringstream s(l); s >> i; *a = i; break; }
+            case '.': if(format) cout << (unsigned)*a; else cout << *a;  break;
+            case ',': { string l; unsigned i; getline(cin, l); istringstream s(l); s >> i; if(format) *a = i; else *a = (unsigned char)i; break; }
             case '[':
             {
                 t.push(i-1); if(*a) break;
@@ -57,12 +63,21 @@ int main()
         cout << "$ ";
         getline(cin, s); if(!cin) return 0;
 
-        if(s.empty()) continue;
+        if(s.empty());
         else if(s == "exit") return 0;
-        else if(s == "cls") { system("cls"); continue; }
-        else { b->run(s); cout << endl; }
-
-        cout << endl;
+        else if(s == "cls") system("cls");
+        else if(s == "help")
+        {
+            cout << "Commands:\n"
+                 << "  exit \t\t Close the program.\n"
+                 << "  cls \t\t Clear the screen.\n"
+                 << "  help \t\t Show help information.\n"
+                 << "  int \t\t Set IO mode to int.\n"
+                 << "  char \t\t Set IO mode to char.\n\n";
+        }
+        else if(s == "char") b->setFormat(false);
+        else if(s == "int") b->setFormat(true);
+        else { b->run(s); cout << "\n\n"; }
     }
 
     delete b; return 0;
