@@ -8,8 +8,8 @@ class Brainfuck
 {
     static const int ms = 1024;
 
-    char m[ms];
-    char *a;
+    unsigned char m[ms];
+    unsigned char *a;
     unsigned i, b;
     stack<unsigned> t;
 
@@ -29,8 +29,8 @@ public:
             case '<': --a; break;
             case '+': ++*a; break;
             case '-': --*a; break;
-            case '.': cout << *a; break;
-            case ',': { string l; getline(cin, l); istringstream s(l); s >> *a; break; }
+            case '.': cout << (unsigned)(*a); break;
+            case ',': { string l; unsigned i; getline(cin, l); istringstream s(l); s >> i; *a = i; break; }
             case '[':
             {
                 t.push(i-1); if(*a) break;
