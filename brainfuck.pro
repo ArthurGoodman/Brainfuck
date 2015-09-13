@@ -4,3 +4,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp
+
+OTHER_FILES += \
+    examples/hello.bf
